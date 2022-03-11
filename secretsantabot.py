@@ -20,7 +20,7 @@ import random
 exp_cols = 8
 
 #read data from excel
-excel_sheet = xlrd.open_workbook('teilnehmer_wien.xlsx').sheet_by_index(0)
+excel_sheet = xlrd.open_workbook('participants.xlsx').sheet_by_index(0)
 #print(excel_sheet.cell_value(0, 0))
 
 n_participants = excel_sheet.nrows
