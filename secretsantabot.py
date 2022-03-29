@@ -31,12 +31,14 @@ assert n_participants > 2 #check if enough participants
 #generate pairings
 partA = list(range(1,n_participants))
 partB = partA.copy()
-badpair = 1
-while badpair != 0:
-    badpair = 0
+#badpair = 1
+#while badpair != 0:
+#    badpair = 0
+#    random.shuffle(partB)
+#    for k in range(n_participants-1):
+#        badpair += (partA[k] == partB[k])
+while any(a==b for (a,b) in zip(partA,partB)):
     random.shuffle(partB)
-    for k in range(n_participants-1):
-        badpair += (partA[k] == partB[k])
 
 #send mail
 port = 465  # For SSL
