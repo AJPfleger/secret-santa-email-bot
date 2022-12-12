@@ -42,8 +42,8 @@ while any(a==b for (a,b) in zip(partA,partB)):
 
 #send mail
 port = 465  # For SSL
-smtp_server = "smtp.easyname.com"
-sender_email = "wichtelbot@afoep.at"  # Enter your address
+smtp_server = "smtp.randomserver.xyz"
+sender_email = "email@email.xyz"  # Enter your address
 password = input("Type your password and press enter: ")
 
 
