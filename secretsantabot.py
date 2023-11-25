@@ -5,42 +5,43 @@
 Wichtelbot
 Alexander J. Pfleger
 
-Secret Santa Programm, that generates random pairings and notifies
+Secret Santa Programme, that generates random pairings and notifies
 all participants over email whom they have to gift something.
 
 Sources:
     https://realpython.com/python-send-email/
 """
 
-import smtplib, ssl
+import smtplib
+import ssl
 from email.mime.text import MIMEText
 import xlrd
 import random
 
 exp_cols = 8
 
-#read data from excel
-excel_sheet = xlrd.open_workbook('participants.xlsx').sheet_by_index(0)
-#print(excel_sheet.cell_value(0, 0))
+# read data from excel
+excel_sheet = xlrd.open_workbook("participants.xlsx").sheet_by_index(0)
+# print(excel_sheet.cell_value(0, 0))
 
 n_participants = excel_sheet.nrows
 
-assert excel_sheet.ncols==exp_cols #check if xlsx has proper dimension
-assert n_participants > 2 #check if enough participants
+assert excel_sheet.ncols == exp_cols  # check if xlsx has proper dimension
+assert n_participants > 2  # check if enough participants
 
-#generate pairings
-partA = list(range(1,n_participants))
+# generate pairings
+partA = list(range(1, n_participants))
 partB = partA.copy()
-#badpair = 1
-#while badpair != 0:
+# badpair = 1
+# while badpair != 0:
 #    badpair = 0
 #    random.shuffle(partB)
 #    for k in range(n_participants-1):
 #        badpair += (partA[k] == partB[k])
-while any(a==b for (a,b) in zip(partA,partB)):
+while any(a == b for (a, b) in zip(partA, partB)):
     random.shuffle(partB)
 
-#send mail
+# send mail
 port = 465  # For SSL
 smtp_server = "smtp.randomserver.xyz"
 sender_email = "email@email.xyz"  # Enter your address
@@ -99,31 +100,33 @@ ________________________________________________________________
 
 """
 
-for pair in range(n_participants-1):
+for pair in range(n_participants - 1):
     receiver_email = excel_sheet.cell_value(partA[pair], 3)
-    
-    message = rawmessage.format(nameA=excel_sheet.cell_value(partA[pair], 2),
-                                nameB=excel_sheet.cell_value(partB[pair], 2),
-                                mailB=excel_sheet.cell_value(partB[pair], 3),
-                                date=excel_sheet.cell_value(partB[pair], 4),
-                                adresse=excel_sheet.cell_value(partB[pair], 5),
-                                food=excel_sheet.cell_value(partB[pair], 6),
-                                comment=excel_sheet.cell_value(partB[pair], 7))
-    
+
+    message = rawmessage.format(
+        nameA=excel_sheet.cell_value(partA[pair], 2),
+        nameB=excel_sheet.cell_value(partB[pair], 2),
+        mailB=excel_sheet.cell_value(partB[pair], 3),
+        date=excel_sheet.cell_value(partB[pair], 4),
+        adresse=excel_sheet.cell_value(partB[pair], 5),
+        food=excel_sheet.cell_value(partB[pair], 6),
+        comment=excel_sheet.cell_value(partB[pair], 7),
+    )
+
     print(receiver_email)
     print(message)
-    
+
     """
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message)
     """
-    
-    msg = MIMEText(message.encode('utf-8'), _charset='utf-8')
-    msg['Subject'] = 'Wichteln 2021'
-    msg['From'] = sender_email
-    msg['To'] = 'mail@mail.com'
+
+    msg = MIMEText(message.encode("utf-8"), _charset="utf-8")
+    msg["Subject"] = "Wichteln 2021"
+    msg["From"] = sender_email
+    msg["To"] = "mail@mail.com"
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
         server.login(sender_email, password)
