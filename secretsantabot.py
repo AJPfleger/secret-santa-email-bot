@@ -59,7 +59,9 @@ with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
 rawmessage = """
 Liebe(r) {nameA}!
 
-Schön, dass Du dieses Jahr beim AFÖP-Wichteln dabei bist. Bitte bereite ein Geschenk für {nameB} vor aber sags nicht weiter, wen Du beschenkst, damit alle mehr Freude am Wichteln haben. Um ein passendes Geschenk zu finden und es auch rechtzeitig zu übergeben hat Dir Dein Wichtel noch ein paar Informationen hinterlassen.
+Schön, dass Du dieses Jahr beim AFÖP-Wichteln dabei bist. Bitte bereite ein Geschenk für {nameB} vor aber sags nicht \
+weiter, wen Du beschenkst, damit alle mehr Freude am Wichteln haben. Um ein passendes Geschenk zu finden und es auch \
+rechtzeitig zu übergeben hat Dir Dein Wichtel noch ein paar Informationen hinterlassen.
 
 Dein Wichtel würde das Geschenk am liebsten so erhalten:
 {adresse}
@@ -124,7 +126,7 @@ for pair in range(n_participants - 1):
     """
 
     msg = MIMEText(message.encode("utf-8"), _charset="utf-8")
-    msg["Subject"] = "Wichteln 2021"
+    msg["Subject"] = "Wichteln 2023"
     msg["From"] = sender_email
     msg["To"] = "mail@mail.com"
     context = ssl.create_default_context()
